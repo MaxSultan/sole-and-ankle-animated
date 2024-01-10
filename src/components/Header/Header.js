@@ -1,13 +1,13 @@
-import React from 'react';
-import styled from 'styled-components/macro';
+import React from "react";
+import styled from "styled-components/macro";
 
-import { QUERIES, WEIGHTS } from '../../constants';
-import Logo from '../Logo';
-import Icon from '../Icon';
-import UnstyledButton from '../UnstyledButton';
-import SuperHeader from '../SuperHeader';
-import MobileMenu from '../MobileMenu';
-import VisuallyHidden from '../VisuallyHidden';
+import { QUERIES, WEIGHTS } from "../../constants";
+import Logo from "../Logo";
+import Icon from "../Icon";
+import UnstyledButton from "../UnstyledButton";
+import SuperHeader from "../SuperHeader";
+import MobileMenu from "../MobileMenu";
+import VisuallyHidden from "../VisuallyHidden";
 
 const Header = () => {
   const [showMobileMenu, setShowMobileMenu] = React.useState(false);
@@ -20,12 +20,12 @@ const Header = () => {
           <Logo />
         </LogoWrapper>
         <DesktopNav>
-          <NavLink href="/sale">Sale</NavLink>
-          <NavLink href="/new">New&nbsp;Releases</NavLink>
-          <NavLink href="/men">Men</NavLink>
-          <NavLink href="/women">Women</NavLink>
-          <NavLink href="/kids">Kids</NavLink>
-          <NavLink href="/collections">Collections</NavLink>
+          <AnimatedNavLink href="/sale">Sale</AnimatedNavLink>
+          <AnimatedNavLink href="/new">New&nbsp;Releases</AnimatedNavLink>
+          <AnimatedNavLink href="/men">Men</AnimatedNavLink>
+          <AnimatedNavLink href="/women">Women</AnimatedNavLink>
+          <AnimatedNavLink href="/kids">Kids</AnimatedNavLink>
+          <AnimatedNavLink href="/collections">Collections</AnimatedNavLink>
         </DesktopNav>
         <MobileActions>
           <ShoppingBagButton>
@@ -75,6 +75,8 @@ const DesktopNav = styled.nav`
   display: flex;
   gap: clamp(1rem, 9.2vw - 4.5rem, 3.5rem);
   margin: 0px 48px;
+  height: 26px;
+  overflow: hidden;
 
   @media ${QUERIES.tabletAndSmaller} {
     display: none;
@@ -114,15 +116,33 @@ const Filler = styled.div`
   }
 `;
 
+const Bold = styled.div`
+  font-weight: ${WEIGHTS.bold};
+`;
+
 const NavLink = styled.a`
   font-size: 1.125rem;
   text-transform: uppercase;
   text-decoration: none;
   color: var(--color-gray-900);
   font-weight: ${WEIGHTS.medium};
+  transition: transform 500ms;
 
   &:first-of-type {
     color: var(--color-secondary);
+  }
+`;
+
+const AnimatedNavLink = styled(({ children, href, ...rest }) => (
+  <NavLink href={href} {...rest}>
+    {children}
+    <Bold>{children}</Bold>
+  </NavLink>
+))`
+  display: block;
+
+  &:hover {
+    transform: translateY(-100%);
   }
 `;
 
